@@ -20,6 +20,13 @@ Servidor para el proyecto BandNames. El proyecto fue migrado a `typescript` .
     tsc init
 ```
 
+2. Instalar dependencias
+
+``` shell_script
+npm install express && npm install --save-dev typescript nodemon @types/node @types/express
+```
+
+
 2. Configurar el `package.json` de la siguiente forma:
 
 ``` json
