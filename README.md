@@ -13,7 +13,7 @@ Servidor para el proyecto BandNames. El proyecto fue migrado a `typescript` .
 
 ### Crear un proyecto de express en typescript:
 
-1. Ininicializar el entorno
+1. Inicializar el entorno
 
 ``` shell_script
     npm init

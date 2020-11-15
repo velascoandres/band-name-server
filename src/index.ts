@@ -1,8 +1,11 @@
 import express from 'express'
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 // path publico
 
@@ -14,10 +17,10 @@ app.use(express.static(pathPublico));
 
 
 app.listen(
-    3000,
+    port,
     () => {
         console.log(pathPublico);
-        console.log('Servidor corriendo en el puerto 3000');
+        console.log(`Servidor corriendo en el puerto ${port}`);
     }
 );
 
