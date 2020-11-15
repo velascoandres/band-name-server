@@ -2,16 +2,19 @@ import express from 'express'
 import path from 'path';
 import dotenv from 'dotenv';
 import http from 'http';
-import { setupSockets } from './sockets';
+import { setupSockets } from './sockets/sockets';
 
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+export const port = process.env.PORT;
 
 // sockets
-const server = http.createServer(app);
+
+export const server = http.createServer(app);
+export const io = require('socket.io')(server);
+
 setupSockets(server, port);
 
 // path publico

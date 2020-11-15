@@ -1,15 +1,16 @@
+
 // Mensajes de sockets
 export function setupSockets(server: any, port: number | string) {
     const io = require('socket.io')(server);
-    io.on('connection',
+    io.on(
+        'connection',
         (client: any) => {
-
             console.log('Cliente conectado');
-
             client.on(
                 'disconnect',
                 () => { /* … */ },
             );
+            // evento mensaje
             client.on(
                 'mensaje',
                 (data: any) => {
@@ -18,6 +19,7 @@ export function setupSockets(server: any, port: number | string) {
                 },
             );
         },
+        
     );
 
     server.listen(
