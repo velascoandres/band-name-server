@@ -7,8 +7,16 @@ export function setupSockets(server: any, port: number | string) {
         (client: any) => {
             console.log('Cliente conectado');
             client.on(
+                'connect',
+                () => {
+                    console.log('conexion');
+                },
+            );
+            client.on(
                 'disconnect',
-                () => { /* … */ },
+                () => {
+                    console.log('disconnect');
+                },
             );
             // evento mensaje
             client.on(
@@ -19,14 +27,14 @@ export function setupSockets(server: any, port: number | string) {
                 },
             );
         },
-        
-    );
 
+    );
     server.listen(
         port,
         () => {
             console.log(`Servidor corriendo en el puerto ${port}`);
         }
     );
+    
 
 }
