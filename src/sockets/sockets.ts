@@ -23,6 +23,7 @@ export function setupSockets(server: any, port: number | string) {
                 'mensaje',
                 (data: any) => {
                     console.log('mensaje: ', data);
+                    //io.emit('mensaje', { admin: 'Nuevo mensaje' });
                     io.emit('mensaje', { admin: 'Nuevo mensaje' });
                 },
             );
