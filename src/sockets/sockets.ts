@@ -27,6 +27,13 @@ export function setupSockets(server: any, port: number | string) {
                     io.emit('mensaje', { admin: 'Nuevo mensaje' });
                 },
             );
+            client.on(
+                'emitir-mensaje', (payload: any) => {
+                    console.log(payload);
+                    // io.emit('nuevo-mensaje', payload); // Emite a todos
+                    client.broadcast.emit('nuevo-mensaje', payload); // Emite a todos menos al emisor
+                }
+            )
         },
 
     );
@@ -36,6 +43,6 @@ export function setupSockets(server: any, port: number | string) {
             console.log(`Servidor corriendo en el puerto ${port}`);
         }
     );
-    
+
 
 }
