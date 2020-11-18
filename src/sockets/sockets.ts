@@ -10,7 +10,7 @@ bandRepository
     .addBand(new Band('Pantera'))
     .addBand(new Band('Bon Jovi'));
 
-console.log(bandRepository.bands);
+console.table(bandRepository.bands);
 
 // Mensajes de sockets
 export function setupSockets(server: any, port: number | string) {
@@ -19,6 +19,9 @@ export function setupSockets(server: any, port: number | string) {
         'connection',
         (client: any) => {
             console.log('Cliente conectado');
+
+            client.emit('active-bands', { bands: bandRepository.bands })
+
             client.on(
                 'connect',
                 () => {
@@ -49,15 +52,15 @@ export function setupSockets(server: any, port: number | string) {
             );
 
             client.on(
-                'bands',
-                (payload: any) => io.emit('bands', { bands: bandRepository.bands }),
+                'active-bands',
+                (payload: any) => io.emit('active-bands', { bands: bandRepository.bands }),
             );
 
             client.on(
                 'vote',
                 (payload: { id: string }) => {
                     bandRepository.voteBand(payload.id);
-                    io.emit('bands', { bands: bandRepository.bands });
+                    io.emit('active-bands', { bands: bandRepository.bands });
                 }
             );
         },

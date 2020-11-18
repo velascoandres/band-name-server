@@ -32,6 +32,11 @@
             },
         );
 
+        socket.on(
+            'active-bands',
+            (payload) => console.table(payload.bands),
+        );
+
         socket.emit('mensaje', {nombre: 'Andres'});
 
     </script>
