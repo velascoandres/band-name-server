@@ -10,12 +10,13 @@ export class BandRepository {
         this._bands = [];
     }
 
-    addBand(band: Band): void {
+    addBand(band: Band): BandRepository {
         this._bands.push(band);
+        return this;
     }
 
     get bands(): Band[] {
-        return this.bands;
+        return this._bands;
     }
 
     deleteBand(id: string): void {
@@ -31,7 +32,7 @@ export class BandRepository {
         );
 
         if (index) {
-            this.bands[index].votes++;
+            this._bands[index].votes++;
         }
     }
 }

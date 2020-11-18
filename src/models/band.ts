@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 export class Band {
 
@@ -8,7 +8,7 @@ export class Band {
        public name: string = 'no-name',
        public votes: number = 0,
     ) {
-        this.id = uuid.v4(); // Identificador
+        this.id = uuid(); // Identificador
     }
 
 }

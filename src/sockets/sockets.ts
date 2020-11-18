@@ -1,3 +1,16 @@
+import { Band } from '../models/band';
+import { BandRepository } from '../repositories/band.repository';
+
+const bandRepository: BandRepository = new BandRepository();
+bandRepository
+    .addBand(new Band('Queen'))
+    .addBand(new Band('Kiss'))
+    .addBand(new Band('Metallica'))
+    .addBand(new Band('Iron Maiden'))
+    .addBand(new Band('Pantera'))
+    .addBand(new Band('Bon Jovi'));
+
+console.log(bandRepository.bands);
 
 // Mensajes de sockets
 export function setupSockets(server: any, port: number | string) {
@@ -33,7 +46,20 @@ export function setupSockets(server: any, port: number | string) {
                     // io.emit('nuevo-mensaje', payload); // Emite a todos
                     client.broadcast.emit('nuevo-mensaje', payload); // Emite a todos menos al emisor
                 }
-            )
+            );
+
+            client.on(
+                'bands',
+                (payload: any) => io.emit('bands', { bands: bandRepository.bands }),
+            );
+
+            client.on(
+                'vote',
+                (payload: { id: string }) => {
+                    bandRepository.voteBand(payload.id);
+                    io.emit('bands', { bands: bandRepository.bands });
+                }
+            );
         },
 
     );
