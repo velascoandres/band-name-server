@@ -30,8 +30,8 @@ export class BandRepository {
         const index = this._bands.findIndex(
             band => band.id === id,
         );
-
-        if (index) {
+        
+        if (index !== -1) {
             this._bands[index].votes++;
         }
     }
