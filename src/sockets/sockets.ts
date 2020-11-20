@@ -64,6 +64,16 @@ export const socket = (server: any) => {
             );
 
             client.on(
+                'add-band',
+                (payload: Band) => {
+                    bandRepository.addBand(
+                        new Band(payload.name,),
+                    );
+                    io.emit('active-bands', { bands: bandRepository.bands });
+                }
+            )
+
+            client.on(
                 'vote',
                 (payload: { id: string }) => {
                     bandRepository.voteBand(payload.id);
@@ -79,6 +89,6 @@ export const socket = (server: any) => {
             console.log(`Servidor corriendo en el puerto ${port}`);
         }
     );
-    
+
 };
 
