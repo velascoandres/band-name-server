@@ -80,6 +80,14 @@ export const socket = (server: any) => {
                     io.emit('active-bands', { bands: bandRepository.bands });
                 }
             );
+
+            client.on(
+                'delete-band',
+                (payload: { id: string }) => {
+                    bandRepository.deleteBand(payload.id);
+                    io.emit('active-bands', { bands: bandRepository.bands });
+                }
+            )
         },
 
     );
