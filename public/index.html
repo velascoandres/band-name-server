@@ -77,18 +77,20 @@
                 datasets: [
                     {
                         data: [],
+                        backgroundColor: [],
+                        hoverBackgroundColor: [],	
                     }
                 ],
                 labels: [],
             };
 
             return bands.reduce(
-                (acc, band) => {
-
+                (acc, band, indice) => {
                     acc.datasets[0].data.push(band.votes);
+                    acc.datasets[0].backgroundColor.push(colorRandomico(indice));
+                    acc.datasets[0].hoverBackgroundColor.push(colorRandomico(indice));
                     acc.labels.push(band.name);
                     return acc;
-
                 }, datosIniciales,
             );
 
@@ -101,9 +103,35 @@
             let ctx = document.getElementById('myChart').getContext('2d');
             let grafico = new Chart(ctx, {
                 data: data,
-                type: 'pie',
-                options: {},
+                type: 'polarArea',
+                options: {
+                    responsive: true,
+                    legend:{
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Resultados de las votaciones',
+                    },
+                    animation: {
+                        easing: 'linear',
+                        duration: '10',
+                    }
+                },
             });
+        }
+
+        function colorRandomico(indice) {
+            const valorX = (indice * 10) + 85 < 255 ? indice * 10 + 85 : (indice % 255)*10 + 140;
+            const valorY = (indice * 10) + 120 < 255 ? indice * 10 + 120 : (indice % 255)*10 + 65;
+            const valorZ = (indice * 10) + 40 < 255 ? indice * 10 + 40 : (indice % 255)*10 + 40;
+
+            const esPar = indice % 2 === 0;
+            if (esPar){
+                return `rgb(${valorX*0.9},${valorY*0.35}, ${valorZ*0.32})`;
+            } 
+            return `rgb(${valorZ*0.8},${valorY*0.58}, ${valorX*0.1})`;
+
         }
 
     </script>
