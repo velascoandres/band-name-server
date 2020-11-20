@@ -1,19 +1,21 @@
+import { port } from '..';
 import { Band } from '../models/band';
 import { BandRepository } from '../repositories/band.repository';
 
-const bandRepository: BandRepository = new BandRepository();
-bandRepository
-    .addBand(new Band('Queen'))
-    .addBand(new Band('Kiss'))
-    .addBand(new Band('Metallica'))
-    .addBand(new Band('Iron Maiden'))
-    .addBand(new Band('Pantera'))
-    .addBand(new Band('Bon Jovi'));
 
-console.table(bandRepository.bands);
+export const socket = (server: any) => {
 
-// Mensajes de sockets
-export function setupSockets(server: any, port: number | string) {
+    const bandRepository: BandRepository = new BandRepository();
+    bandRepository
+        .addBand(new Band('Queen'))
+        .addBand(new Band('Kiss'))
+        .addBand(new Band('Metallica'))
+        .addBand(new Band('Iron Maiden'))
+        .addBand(new Band('Pantera'))
+        .addBand(new Band('Bon Jovi'));
+
+    console.table(bandRepository.bands);
+
     const io = require('socket.io')(server);
     io.on(
         'connection',
@@ -72,6 +74,6 @@ export function setupSockets(server: any, port: number | string) {
             console.log(`Servidor corriendo en el puerto ${port}`);
         }
     );
+    
+};
 
-
-}

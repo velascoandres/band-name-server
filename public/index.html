@@ -5,29 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .activo {
+            color: green;
+        }
+
+        .inactivo {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Accesso denegado</h1>
+
+    <h3>
+        Estado: <span id="estado"></span>
+    </h3>
+
+    <div id="mensaje">
+    </div>
+
+    <canvas id="myChart" width="200" height="200"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <button click="emitir()">Emitir Mensaje</button>
+
     <script src="socket.io/socket.io.js"></script>
     <script>
         var socket = io();
         socket.on(
             'connect',
             () => {
+                document.getElementById('estado').className = "activo";
+                document.getElementById('estado').innerText = "Conectado";
                 console.log('Conectado al servidor');
             },
         );
         socket.on(
             'disconnect',
             () => {
+                document.getElementById('estado').className = "inactivo";
+                document.getElementById('estado').innerText = "Desconectado";
                 console.log('Perdimos la conexion con el servidor');
             },
         );
 
         socket.on(
-            'mensaje',
+            'active-bands',
             (payload) => {
+                graficar(payload.bands);
                 console.log('mensaje: ', payload);
             },
         );
@@ -37,7 +64,47 @@
             (payload) => console.table(payload.bands),
         );
 
-        socket.emit('mensaje', {nombre: 'Andres'});
+
+        function emitir() {
+            console.log('emitiendo');
+            socket.emit('mensaje', { nombre: 'Andres' });
+        }
+
+
+        function procesarDatos(bands) {
+
+            const datosIniciales = {
+                datasets: [
+                    {
+                        data: [],
+                    }
+                ],
+                labels: [],
+            };
+
+            return bands.reduce(
+                (acc, band) => {
+
+                    acc.datasets[0].data.push(band.votes);
+                    acc.labels.push(band.name);
+                    return acc;
+
+                }, datosIniciales,
+            );
+
+        }
+
+        function graficar(datos) {
+
+            const data = procesarDatos(datos);
+
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let grafico = new Chart(ctx, {
+                data: data,
+                type: 'pie',
+                options: {},
+            });
+        }
 
     </script>
 </body>

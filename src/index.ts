@@ -2,7 +2,9 @@ import express from 'express'
 import path from 'path';
 import dotenv from 'dotenv';
 import http from 'http';
-import { setupSockets } from './sockets/sockets';
+import { socket } from './sockets/sockets';
+
+
 let cors = require('cors');
 
 dotenv.config();
@@ -21,13 +23,7 @@ export const server = http.createServer(app);
 const pathPublico = path.resolve('public');
 
 
-
 app.use(express.static(pathPublico));
+socket(server);
 
-
-setupSockets(server, port);
-
-
-
-
-
+// setupSockets(server, port);
