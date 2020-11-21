@@ -8,16 +8,10 @@ export const socket = (server: any) => {
     const bandRepository: BandRepository = new BandRepository();
     bandRepository
         .addBand(new Band('Queen'))
-        .addBand(new Band('Kiss'))
         .addBand(new Band('Metallica'))
         .addBand(new Band('Iron Maiden'))
-        .addBand(new Band('Pantera'))
         .addBand(new Band('Bon Jovi'))
         .addBand(new Band('Soda Stereo'))
-        .addBand(new Band('Heroes del Silencio'))
-        .addBand(new Band('Charly Garcia'))
-        .addBand(new Band('Rata Blanca'))
-        .addBand(new Band('Beatles'))
 
     console.table(bandRepository.bands);
 
